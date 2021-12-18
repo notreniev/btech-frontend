@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { ProjectModel } from '../../domains/models/project.model';
 import { TaskModel } from '../../domains/models/task.model';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-card',
@@ -20,12 +21,14 @@ export class CardComponent implements OnInit {
   editingTaskDescription = false;
   showToolTip = false;
 
-  constructor(private alertController: AlertController) { }
+  constructor(
+    private alertController: AlertController, 
+    private projectService: ProjectService) { }
 
   ngOnInit(): void {
   }
 
-  addTask(description: string){
+  async addTask(description: string){
     if (!description) return;
     
     const task = new TaskModel();
@@ -35,6 +38,9 @@ export class CardComponent implements OnInit {
     if (!hasIt){
       this.project.tasks.push(task);
       this.task.description = '';
+      await this.projectService
+        .update(this.project)
+        .toPromise();
     }
   }
 
@@ -51,12 +57,15 @@ export class CardComponent implements OnInit {
     }
   }
 
-  saveTask(task: TaskModel){
+  async saveTask(task: TaskModel){
     const savedTask = {...task};
     const index = this.project.tasks.findIndex(taskObj => taskObj._id === task._id);
     if (index > -1){
       this.project.tasks[index] = savedTask;
       this.task.description = '';
+      await this.projectService
+      .update(this.project)
+      .toPromise();
     }
   }
 
@@ -67,6 +76,9 @@ export class CardComponent implements OnInit {
       const index = this.project.tasks.findIndex(taskObj => taskObj._id === task._id);
       if (index > -1){
         this.project.tasks.splice(index, 1);
+        await this.projectService
+        .update(this.project)
+        .toPromise();  
       }
     }
   }

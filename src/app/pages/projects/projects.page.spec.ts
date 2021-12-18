@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 import { ProjectModule } from '../../components/project/project.module';
@@ -11,7 +12,7 @@ describe('ProjectsPage', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ProjectsPage ],
-      imports: [IonicModule.forRoot(), ProjectModule]
+      imports: [IonicModule.forRoot(), ProjectModule, HttpClientTestingModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProjectsPage);

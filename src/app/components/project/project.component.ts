@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
 import { ProjectModel } from '../../domains/models/project.model';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-project',
@@ -16,7 +17,8 @@ export class ProjectComponent implements OnInit {
 
   constructor(
     private alertController: AlertController,
-    private toastController: ToastController) { }
+    private toastController: ToastController,
+    private projectService: ProjectService) { }
 
   ngOnInit(): void {
     this.projects.reverse();
@@ -26,25 +28,21 @@ export class ProjectComponent implements OnInit {
     this.showHideForm = !this.showHideForm;
   }
 
-  updateProject(updatedProject: ProjectModel) {
+  async updateProject(updatedProject: ProjectModel) {
     const index = this.projects.findIndex(proj => proj._id === updatedProject._id);
 
     if (index > -1) {
       this.projects[index].title = updatedProject.title;
+      await this.projectService.update(updatedProject)
+      .toPromise();
     }
   }
 
-  reverseArr(input) {
-    var ret = new Array;
-    for (var i = input.length - 1; i >= 0; i--) {
-      ret.push(input[i]);
-    }
-    return ret;
-  }
-
-  updateProjects(project: ProjectModel) {
+  async updateProjects(project: ProjectModel) {
     this.projects.unshift(project);
     this.showHideForm = false;
+    await this.projectService.create(project)
+      .toPromise();
   }
 
   async removeProject(removedProject: ProjectModel) {
@@ -55,6 +53,8 @@ export class ProjectComponent implements OnInit {
       if (alert.role === 'ok') {
         this.projects.splice(indexOf, 1);
         this.presentFeedback('Project removed successfully!');
+        await this.projectService.delete(removedProject._id)
+        .toPromise();
       }
     }
   }

@@ -14,6 +14,10 @@
       <div *ngFor="let project of projects">
           <app-card [project]="project" (updateProject)="updateProject(project)" (removeProject)="removeProject(project)"></app-card>
       </div>
+      <div *ngIf="projects.length === 0" class="container-empty-projects">
+        Nenhum projeto até o momento. <br>
+        <a (click)="showHideAddProject()" style="cursor: pointer">Clique aqui para começar</a>
+      </div>
     </div>
     <div class="container-form" *ngIf="showHideForm">
       <app-card-form (updateProjectsEvent)="updateProjects($event)"></app-card-form>

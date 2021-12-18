@@ -15,12 +15,33 @@ export class ProjectService extends BaseService{
     super();
    }
 
+   create(project: ProjectModel):Observable<ProjectModel>{
+     return this.httpClient
+     .post<ProjectModel>(`${environment.api}/projects`, project, this.httpOptions())
+     .pipe(catchError(this.handleError));
+   }
+
+   update(project: ProjectModel):Observable<ProjectModel>{
+    return this.httpClient
+    .patch<ProjectModel>(`${environment.api}/projects/${project._id}`, project, this.httpOptions())
+    .pipe(catchError(this.handleError));
+  }
+
   getProjects(): Observable<ProjectModel[]>{
-      return this.httpClient.get<ProjectModel[]>(`${environment.api}/projects`, this.httpOptions())
+      return this.httpClient
+      .get<ProjectModel[]>(`${environment.api}/projects`, this.httpOptions())
       .pipe(catchError(this.handleError));
   }
 
-  getProject(){
+  getProjectById(projectId: string): Observable<ProjectModel>{
+    return this.httpClient
+    .get<ProjectModel>(`${environment.api}/projects/${projectId}`, this.httpOptions())
+    .pipe(catchError(this.handleError));
+  }
 
+  delete(projectId: string): Observable<ProjectModel>{
+    return this.httpClient
+      .delete<ProjectModel>(`${environment.api}/projects/${projectId}`, this.httpOptions())
+      .pipe(catchError(this.handleError));
   }
 }
