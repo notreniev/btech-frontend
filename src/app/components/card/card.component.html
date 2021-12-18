@@ -1,0 +1,42 @@
+<ion-card class="card">
+    <ion-card-header class="card-container-header">
+      <div class="card-header-title">
+        <ion-card-title>{{project.title}}</ion-card-title>
+      </div>
+      <div class="card-header-icons">
+        <span class="icon card-edit-icon"></span>
+        <span class="icon card-trash-icon"></span>
+    </div>
+
+    </ion-card-header>
+  
+    <ion-card-content class="card-content">
+      <h5 class="card-title">To Do</h5>
+      <form #formProject="ngForm">
+        <div class="form-check" *ngFor="let task of project.tasks">
+            <input class="form-check-input" type="checkbox" value="" id="{{task._id}}" (change)="finish(task)">
+            <label class="form-check-label" for="{{task._id}}">
+              {{task.description}}
+            </label>
+        </div>
+
+        <br>
+
+        <h5 class="card-title">Done</h5>
+        <div class="form-check" *ngFor="let done of dones">
+            <input class="form-check-input" type="checkbox" checked="true" [disabled]="true">
+            <label class="form-check-label">
+              {{done.description}} 
+            </label>
+        </div>
+      </form>
+    </ion-card-content>
+
+    <div class="card-footer">
+        <ion-input class="input" type="text" [(ngModel)]="task.description" id="description" name="description" required
+            #description="ngModel" placeholder="Task">
+        </ion-input>
+        <ion-button color="success" (click)="addTask(task.description)" [disabled]="formProject.invalid">Add</ion-button>
+    </div>
+
+</ion-card>

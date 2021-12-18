@@ -1,0 +1,22 @@
+<ion-content>
+  <div class="container">
+    <div class="container-projects">
+      <div *ngFor="let project of projects">
+          <app-card [project]="project"></app-card>
+      </div>
+    </div>
+    <div class="container-form">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Create a new project</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content class="card-content">
+          Create a new project
+          <ion-input [(ngModel)]="title" id="title" name="title" class="input" placeholder="Project name"></ion-input>
+          <ion-button color="success" expand="full" (click)="addProject(title)">Create Project</ion-button>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

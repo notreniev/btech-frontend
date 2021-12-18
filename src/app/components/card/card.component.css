@@ -1,0 +1,83 @@
+.card{
+    margin-top: 20px;
+    padding: 10px;
+    width: 24rem;
+    min-height: 430px;
+    padding: 0 0 20px 0;
+}
+
+.card-container-header{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    background-image: linear-gradient(to bottom, #ffffff, #eeeeee);
+    border: solid 1px #eeeeee;
+
+}
+
+.card-content{
+    margin-top: 20px;
+}
+
+.card-edit-icon{
+    mask: url(../../../assets/custom-icons/pencil.svg);
+}
+
+.card-trash-icon{
+    mask: url(../../../assets/custom-icons/trash.svg);
+}
+
+.icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: darkcyan;
+    mask-size: cover;
+    margin: 0 4px;
+}
+
+.icon:hover,
+.icon:focus {
+    background: red;
+}
+
+.card-title{
+    margin: 10px 0 10px 0;
+    font-weight: 900;
+}
+
+.card-header-title{
+    width: 80%;
+    border: solid 0px green;
+}
+
+.card-header-icons{
+    width: 20%;
+    border: solid 0px red;
+    text-align: end;
+}
+
+.card-footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    border-top: solid 1px #ddd;
+    padding: 20px 10px;
+}
+
+.card-footer ion-input{
+    margin: 0 25px 0 0;
+    border: solid 0px red;
+}
+
+.card-footer .input{
+    border: solid 1px #ddd;
+    border-radius: 7px;
+}
+
+.card-footer button{
+    background-color: green;
+    padding: 0 20px 0 20px;
+}
+

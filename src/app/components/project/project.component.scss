@@ -1,0 +1,37 @@
+.container {
+    margin: 4px;
+    display: flex;
+}
+
+.container-projects {
+    width: 90vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    place-content: center;
+    place-items: center;
+    justify-content: flex-start;
+}
+
+.container-projects > div {
+    margin: 10px;
+}
+
+.container-form{
+    margin-top: 16px;
+    min-width: 300px;
+    height: 220px;
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: wrap;
+}
+
+.container-form .input{
+    margin: 10px 0 10px 0;
+    border: solid 1px #ddd;
+    border-radius: 7px;
+}
+
+.container-form .card-content{
+    margin-bottom: 50px;
+}
