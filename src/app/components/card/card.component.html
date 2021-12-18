@@ -1,11 +1,23 @@
 <ion-card class="card">
     <ion-card-header class="card-container-header">
       <div class="card-header-title">
-        <ion-card-title>{{project.title}}</ion-card-title>
+        <div *ngIf="!editing">
+          <ion-card-title>{{project.title}}</ion-card-title>
+        </div>
+        <div *ngIf="editing">
+          <ion-input class="input" type="text" [(ngModel)]="project.title" id="title" name="title" required #title="ngModel">
+          </ion-input>
+        </div>
       </div>
       <div class="card-header-icons">
-        <span class="icon card-edit-icon"></span>
-        <span class="icon card-trash-icon"></span>
+        <div *ngIf="!editing">
+          <span class="icon card-edit-icon" (click)="editTitle()"></span>
+          <span class="icon card-trash-icon" (click)="remove(project)"></span>
+        </div>
+        <div *ngIf="editing" id="actions">
+          <span class="icon card-save-icon" (click)="save(project)"></span>
+          <span class="icon card-close-icon" (click)="cancel()"></span>
+        </div>
     </div>
 
     </ion-card-header>

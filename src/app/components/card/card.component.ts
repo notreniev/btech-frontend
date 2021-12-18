@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProjectModel } from '../../domains/models/project.model';
 import { TaskModel } from '../../domains/models/task.model';
 
@@ -10,15 +10,17 @@ import { TaskModel } from '../../domains/models/task.model';
 export class CardComponent implements OnInit {
 
   @Input() project: ProjectModel;
+  @Output() updateProject: EventEmitter<ProjectModel> = new EventEmitter<ProjectModel>();
+  @Output() removeProject: EventEmitter<ProjectModel> = new EventEmitter<ProjectModel>();
 
   dones: TaskModel[] = [];
   task: TaskModel = new TaskModel();
+  editing = false;
 
   constructor() { 
   }
 
   ngOnInit(): void {
-    console.log('this.project', this.project)
   }
 
   addTask(description: string){
@@ -40,5 +42,22 @@ export class CardComponent implements OnInit {
       task.completed = true;
       this.dones.push(task);
     }
+  }
+
+  editTitle(){
+    this.editing = true;
+  }
+
+  save(project: ProjectModel){
+    this.updateProject.emit(project);
+    this.editing = false;
+  }
+
+  remove(project: ProjectModel){
+    this.removeProject.emit(project);
+  }
+
+  cancel(){
+    this.editing = false;
   }
 }

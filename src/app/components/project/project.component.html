@@ -1,11 +1,21 @@
 <ion-content>
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button color="success" (click)="showHideAddProject()" *ngIf="!showHideForm">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+
+    <ion-fab-button color="danger" (click)="showHideAddProject()" *ngIf="showHideForm">
+      <ion-icon name="close"></ion-icon>
+    </ion-fab-button>
+
+  </ion-fab>
   <div class="container">
     <div class="container-projects">
       <div *ngFor="let project of projects">
-          <app-card [project]="project"></app-card>
+          <app-card [project]="project" (updateProject)="updateProject(project)" (removeProject)="removeProject(project)"></app-card>
       </div>
     </div>
-    <div class="container-form">
+    <div class="container-form" *ngIf="showHideForm">
       <ion-card>
         <ion-card-header>
           <ion-card-title>Create a new project</ion-card-title>

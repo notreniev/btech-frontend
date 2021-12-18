@@ -27,6 +27,14 @@
     mask: url(../../../assets/custom-icons/trash.svg);
 }
 
+.card-save-icon{
+    mask: url(../../../assets/custom-icons/checkmark-outline.svg);
+}
+
+.card-close-icon{
+    mask: url(../../../assets/custom-icons/close-outline.svg);
+}
+
 .icon {
     display: inline-block;
     width: 16px;
@@ -47,14 +55,27 @@
 }
 
 .card-header-title{
-    width: 80%;
+    width: 70%;
     border: solid 0px green;
 }
 
 .card-header-icons{
-    width: 20%;
+    width: 30%;
     border: solid 0px red;
     text-align: end;
+    margin-top: 7px;
+}
+
+.card-header-icons #actions{
+    width: 100%;
+    border: solid 0px red;
+    text-align: end;
+    justify-content: center;
+}
+
+.card-header-icons #actions .icon{
+    width: 26px;
+    height: 26px;
 }
 
 .card-footer{
@@ -81,3 +102,7 @@
     padding: 0 20px 0 20px;
 }
 
+.input{
+    border: solid 1px #ddd;
+    border-radius: 7px;
+}
