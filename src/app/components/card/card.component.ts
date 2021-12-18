@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { ProjectModel } from '../../domains/models/project.model';
 import { TaskModel } from '../../domains/models/task.model';
 
@@ -19,8 +20,7 @@ export class CardComponent implements OnInit {
   editingTaskDescription = false;
   showToolTip = false;
 
-  constructor() { 
-  }
+  constructor(private alertController: AlertController) { }
 
   ngOnInit(): void {
   }
@@ -58,10 +58,14 @@ export class CardComponent implements OnInit {
     }
   }
 
-  removeTask(task: TaskModel){
-    const index = this.project.tasks.findIndex(taskObj => taskObj._id === task._id);
-    if (index > -1){
-      this.project.tasks.splice(index, 1);
+  async removeTask(task: TaskModel){
+    const alert = await this.removeWithConfirmation();
+    
+    if (alert.role === 'ok') {
+      const index = this.project.tasks.findIndex(taskObj => taskObj._id === task._id);
+      if (index > -1){
+        this.project.tasks.splice(index, 1);
+      }
     }
   }
 
@@ -80,6 +84,30 @@ export class CardComponent implements OnInit {
 
   cancel(){
     this.editingProjectTitle = false;
+  }
+
+
+  async removeWithConfirmation() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Removing Task',
+      message: 'Are you sure?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Yes',
+          role: 'ok'
+        }
+      ]
+    });
+
+    await alert.present();
+    const role = alert.onDidDismiss();
+
+    return role;
   }
 
 }
