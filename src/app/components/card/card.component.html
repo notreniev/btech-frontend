@@ -31,8 +31,8 @@
                 {{task.description}}
               </a>
             </ion-label>
-              <ion-icon name="trash-outline" size="small" color="danger" *ngIf="task.completed?true:false" (click)="removeTask(task)"></ion-icon>
-              <ion-icon name="checkmark-circle" size="small" color="success" *ngIf="task.completed?true:false" (click)="finishTask(task)"></ion-icon>
+              <span class="icon card-trash-icon" *ngIf="task.completed?true:false" (click)="removeTask(task)"></span>
+              <span class="icon card-save-icon" *ngIf="task.completed?true:false" (click)="finishTask(task)"></span>
           </ion-item>
 
         <br>
@@ -40,9 +40,10 @@
         <h5 class="card-title">Done</h5>
         <div class="form-check" *ngFor="let done of dones">
             <ion-checkbox checked="true" [disabled]="true"></ion-checkbox>
-            <label class="form-check-label">
-              {{done.description}} - <small>finished at: {{done.finishedAt | date: 'MM/dd/yyyy HH:mm'}}</small>
-            </label>
+            <ion-label (mouseover)="showTip(done)">
+              {{done.description}} 
+            </ion-label>
+            <ion-chip color="success">{{done.finishedAt | date: 'MM/dd/yyyy HH:mm'}}</ion-chip>
         </div>
       </form>
     </ion-card-content>

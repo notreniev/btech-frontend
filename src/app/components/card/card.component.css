@@ -32,7 +32,7 @@
 }
 
 .card-save-icon{
-    mask: url(../../../assets/custom-icons/checkmark-outline.svg);
+    mask: url(../../../assets/custom-icons/checkmark-circle-outline.svg);
 }
 
 .card-close-icon{

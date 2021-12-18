@@ -17,7 +17,7 @@ export class CardComponent implements OnInit {
   task: TaskModel = new TaskModel();
   editingProjectTitle = false;
   editingTaskDescription = false;
-  show = false;
+  showToolTip = false;
 
   constructor() { 
   }
@@ -81,4 +81,5 @@ export class CardComponent implements OnInit {
   cancel(){
     this.editingProjectTitle = false;
   }
+
 }
