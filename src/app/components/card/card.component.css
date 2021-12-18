@@ -2,8 +2,13 @@
     margin-top: 20px;
     padding: 10px;
     width: 24rem;
-    min-height: 430px;
-    padding: 0 0 20px 0;
+    min-height: 230px;
+    padding: 0;
+    transition: margin-bottom .15s ease-in-out;
+}
+
+.card:hover{
+    transition: width 2s linear 1s;
 }
 
 .card-container-header{
@@ -12,7 +17,6 @@
     flex-direction: row;
     background-image: linear-gradient(to bottom, #ffffff, #eeeeee);
     border: solid 1px #eeeeee;
-
 }
 
 .card-content{
@@ -42,6 +46,7 @@
     background: darkcyan;
     mask-size: cover;
     margin: 0 4px;
+    cursor: pointer;
 }
 
 .icon:hover,
@@ -79,10 +84,12 @@
 }
 
 .card-footer{
-    position: absolute;
-    bottom: 0;
+    /* position: absolute;
+    bottom: 0; */
     width: 100%;
+    height: 85px;
     display: flex;
+    margin-top: 50px;
     border-top: solid 1px #ddd;
     padding: 20px 10px;
 }
@@ -105,4 +112,40 @@
 .input{
     border: solid 1px #ddd;
     border-radius: 7px;
+}
+
+a, a:visited {
+    color: rgba(100, 200, 240, 255);
+}
+
+a:link{
+    text-decoration: none;
+}
+
+a:hover{
+    color: rgba(0, 155, 200, 155);
+    cursor: pointer;
+}
+
+.card-content ion-checkbox{
+    --size: 14px;
+}
+
+.card-content ion-label{
+    margin: 0 10px;
+}
+
+.card-content ion-icon{
+    display: flex;
+    justify-content: flex-end;
+    border: solid 0px red;
+    margin: 0 10px;
+}
+
+ion-item{
+    border: solid 0px red;
+    --inner-padding-start: 0px;
+    --inner-padding-end: 0px;
+    --padding-start: 0px;
+    --padding-end: 0px;
 }

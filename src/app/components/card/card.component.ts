@@ -15,7 +15,9 @@ export class CardComponent implements OnInit {
 
   dones: TaskModel[] = [];
   task: TaskModel = new TaskModel();
-  editing = false;
+  editingProjectTitle = false;
+  editingTaskDescription = false;
+  show = false;
 
   constructor() { 
   }
@@ -36,21 +38,40 @@ export class CardComponent implements OnInit {
     }
   }
 
-  finish(task: TaskModel){
-    const hasIt = this.project.tasks.some(taskObj => taskObj.description === task.description && task.completed);
+  editTask(task: TaskModel){
+    this.editingTaskDescription = true;
+    this.task = {...task};
+  }
+
+  finishTask(task: TaskModel){
+    const hasIt = this.dones.some(taskObj => taskObj._id === task._id);
     if (!hasIt){
-      task.completed = true;
+      task.finishedAt = new Date();
       this.dones.push(task);
     }
   }
 
+  saveTask(task: TaskModel){
+    const index = this.project.tasks.findIndex(taskObj => taskObj._id === task._id);
+    if (index > -1){
+      this.project.tasks[index] = task;
+    }
+  }
+
+  removeTask(task: TaskModel){
+    const index = this.project.tasks.findIndex(taskObj => taskObj._id === task._id);
+    if (index > -1){
+      this.project.tasks.splice(index, 1);
+    }
+  }
+
   editTitle(){
-    this.editing = true;
+    this.editingProjectTitle = true;
   }
 
   save(project: ProjectModel){
     this.updateProject.emit(project);
-    this.editing = false;
+    this.editingProjectTitle = false;
   }
 
   remove(project: ProjectModel){
@@ -58,6 +79,6 @@ export class CardComponent implements OnInit {
   }
 
   cancel(){
-    this.editing = false;
+    this.editingProjectTitle = false;
   }
 }
