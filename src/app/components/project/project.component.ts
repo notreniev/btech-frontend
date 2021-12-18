@@ -19,16 +19,7 @@ export class ProjectComponent implements OnInit {
     private toastController: ToastController) {}
 
   ngOnInit(): void {
-  }
-
-  addProject(title: string){
-    const project = new ProjectModel();
-    project.title = title;
-    
-    this.projects.push(project);
-    this.title = '';
     this.projects.reverse();
-    this.showHideForm = false;
   }
 
   showHideAddProject(){
@@ -41,6 +32,19 @@ export class ProjectComponent implements OnInit {
     if(index > -1){
       this.projects[index].title = updatedProject.title;
     }
+  }
+
+  reverseArr(input) {
+    var ret = new Array;
+    for(var i = input.length-1; i >= 0; i--) {
+        ret.push(input[i]);
+    }
+    return ret;
+}
+
+  updateProjects(project: ProjectModel){    
+    this.projects.unshift(project);
+    this.showHideForm = false;
   }
 
   async removeProject(removedProject: ProjectModel){
