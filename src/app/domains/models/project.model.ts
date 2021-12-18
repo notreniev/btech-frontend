@@ -5,8 +5,4 @@ export class ProjectModel{
     _id: string = uuidv4();
     title: string;
     tasks: TaskModel[] = []; 
-
-    constructor(){
-
-    }
 }

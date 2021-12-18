@@ -52,9 +52,11 @@ export class CardComponent implements OnInit {
   }
 
   saveTask(task: TaskModel){
+    const savedTask = {...task};
     const index = this.project.tasks.findIndex(taskObj => taskObj._id === task._id);
     if (index > -1){
-      this.project.tasks[index] = task;
+      this.project.tasks[index] = savedTask;
+      this.task.description = '';
     }
   }
 
