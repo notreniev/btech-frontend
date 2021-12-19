@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>EDirectinsure TODO List</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h1>Sign Up</h1>
+  <div id="container">
+
+    <ion-item>
+      <ion-label position="stacked">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        Name
+      </ion-label>
+      <ion-input [(ngModel)]="user.name" id="name" name="name" #name="ngModel" placeholder="Type your name" required></ion-input>
+    </ion-item>
+    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+      <div *ngIf="name.errors.required">
+        <small>Name is mandatory.</small>
+      </div>
+    </div>
+
+
+    <ion-item>
+      <ion-label position="stacked">
+        <ion-icon name="mail-outline"></ion-icon>
+        Username
+      </ion-label>
+      <ion-input type="email" [(ngModel)]="user.email" id="email" name="email" minlength="5" maxlength="100"
+      pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #email="ngModel" placeholder="Type your email" required></ion-input>
+    </ion-item>
+    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+      <div *ngIf="email.errors.required">
+        <small>E-mail is mandatory.</small>
+      </div>
+      <div *ngIf="email.errors.minlength">
+        <small>E-mail must have more than five characters.</small>
+      </div>
+      <div *ngIf="email.errors.pattern">
+        <small>E-mail must have a valid format.</small>
+      </div>
+    </div>
+
+  
+    <ion-item>
+      <ion-label position="stacked">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        Password
+      </ion-label>
+      <ion-input type="password" [(ngModel)]="user.password" id="password" name="password" #password="ngModel" minlength="6" required placeholder="Type your password"></ion-input>
+    </ion-item>
+    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+      <div *ngIf="password.errors.required">
+        <small>Password is mandatory.</small>
+      </div>
+      <div *ngIf="password.errors.minlength">
+        <small>Password must have at leasts six characters.</small>
+      </div>
+    </div>
+
+    <ion-item>
+      <ion-label position="stacked">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        Confirm Password
+      </ion-label>
+      <ion-input type="password" [(ngModel)]="user.confirmPassword" id="confirmPassword" name="confirmPassword" #confirmPassword="ngModel" minlength="6" required placeholder="Re-type your password"></ion-input>
+    </ion-item>
+    <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)"
+    class="alert alert-danger">
+      <div *ngIf="confirmPassword.errors.required">
+        <small>Confirm password is mandatory.</small>
+      </div>
+      <div *ngIf="confirmPassword.errors.minlength">
+        <small>Confirm password must have at least six charecters.</small>
+      </div>
+    </div>
+    <div *ngIf="confirmPassword.dirty || confirmPassword.touched" class="alert alert-danger">
+      <div *ngIf="user.password!==user.confirmPassword">
+        <small>Passwords doesn't match.</small>
+      </div>
+    </div>
+
+    <ion-button expand="full" (click)="register(user)">Register</ion-button>
+
+  </div>
+
+</ion-content>
