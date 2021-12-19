@@ -27,12 +27,12 @@
           <ion-item *ngFor="let task of project.tasks">
             <ion-checkbox [(ngModel)]="task.completed" id="task_{{task._id}}" name="task_{{task._id}}" checked="task.completed?true:false" #completed="ngModel"></ion-checkbox>
             <ion-label>
-              <a (click)="editTask(task)">
+              <a (click)="editTask(task)" title="{{task.description}}">
                 {{task.description}}
               </a>
             </ion-label>
-              <span class="icon card-trash-icon" *ngIf="task.completed?true:false" (click)="removeTask(task)"></span>
-              <span class="icon card-save-icon" *ngIf="task.completed?true:false" (click)="finishTask(task)"></span>
+              <span class="icon card-trash-icon" *ngIf="task.completed?true:false" (click)="removeTask(task)" title="Remove task"></span>
+              <span class="icon card-save-icon" *ngIf="task.completed?true:false" (click)="finishTask(task)" title="Complete task"></span>
           </ion-item>
 
         <br>
