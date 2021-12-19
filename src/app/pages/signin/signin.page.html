@@ -7,48 +7,49 @@
 <ion-content>
   <h1>Login</h1>
   <div id="container">
-    <ion-item>
-      <ion-label position="stacked">
-        <ion-icon name="mail-outline"></ion-icon>
-        Username
-      </ion-label>
-      <ion-input type="email" [(ngModel)]="user.email" id="email" name="email" minlength="5" maxlength="100"
-      pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #email="ngModel" placeholder="Type your email" required></ion-input>
-    </ion-item>
-    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
-      <div *ngIf="email.errors.required">
-        <small>You must provide a valid e-mail.</small>
+    <form #signinForm="ngForm">
+      <ion-item>
+        <ion-label position="stacked">
+          <ion-icon name="mail-outline"></ion-icon>
+          Username
+        </ion-label>
+        <ion-input type="email" [(ngModel)]="user.email" id="email" name="email" minlength="5" maxlength="100"
+          pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" #email="ngModel" placeholder="Type your email"
+          required></ion-input>
+      </ion-item>
+      <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+        <div *ngIf="email.errors.required">
+          <small>You must provide a valid e-mail.</small>
+        </div>
+        <div *ngIf="email.errors.pattern">
+          <small>E-mail must have a valid format.</small>
+        </div>
       </div>
-      <div *ngIf="email.errors.pattern">
-        <small>E-mail must have a valid format.</small>
+
+      <ion-item>
+        <ion-label position="stacked">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          Password
+        </ion-label>
+        <ion-input type="password" [(ngModel)]="user.password" id="password" name="password" #password="ngModel"
+          minlength="6" required placeholder="Type your password"></ion-input>
+      </ion-item>
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+        <div *ngIf="password.errors.required">
+          <small>You must provide a valid password.</small>
+        </div>
+        <div *ngIf="password.errors.minlength">
+          <small>You must provide a valid password.</small>
+        </div>
       </div>
-    </div>
 
-  
-    <ion-item>
-      <ion-label position="stacked">
-        <ion-icon name="lock-closed-outline"></ion-icon>
-        Password
-      </ion-label>
-      <ion-input type="password" [(ngModel)]="user.password" id="password" name="password" #password="ngModel" minlength="6" required placeholder="Type your password"></ion-input>
-    </ion-item>
-    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
-      <div *ngIf="password.errors.required">
-        <small>You must provide a valid password.</small>
-      </div>
-      <div *ngIf="password.errors.minlength">
-        <small>You must provide a valid password.</small>
-      </div>
-    </div>
+      <ion-item lines="none">
+        <a href="#">Forgot password?</a>
+      </ion-item>
 
-
-    <ion-item lines="none">
-      <a href="#">Forgot password?</a>
-    </ion-item>
-  
-    <ion-button expand="full" color="success" (click)="signin(user)">Login</ion-button>
-    <ion-button expand="full" [routerLink]="['/signup']">Register</ion-button>
-
+      <ion-button expand="full" color="success" (click)="signin(user); signinForm.resetForm()">Login</ion-button>
+      <ion-button expand="full" [routerLink]="['/signup']">Register</ion-button>
+    </form>
   </div>
 
 </ion-content>

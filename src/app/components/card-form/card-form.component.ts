@@ -16,7 +16,6 @@ export class CardFormComponent implements OnInit {
   ngOnInit() {}
 
   addProject(title: string){
-    console.log('title', title)
     const project = new ProjectModel();
     project.title = title;
     

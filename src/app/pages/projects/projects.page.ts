@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProjectModel } from '../../domains/models/project.model';
 import { AuthService } from '../../services/auth.service';
 import { ProjectService } from '../../services/project.service';
@@ -14,12 +15,17 @@ export class ProjectsPage implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
     ) {}
 
   ngOnInit(): void {
-    const userValue = this.authService.userValue;
-    this.loadProjects(userValue[0]._id);
+    this.authService.currentUser.subscribe(user => {
+      if (user) this.loadProjects(user[0]._id);
+    }, () => {
+      this.router.navigate(['signin']);
+      location.reload();
+    });
   }
 
   async loadProjects(userId: string){
