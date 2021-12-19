@@ -1,3 +1,7 @@
+ion-card{
+    background-color: #f0f0f0;
+}
+
 .card-content{
     margin-bottom: 50px;
 }
@@ -6,4 +10,9 @@
     margin: 10px 0 10px 0;
     border: solid 1px #ddd;
     border-radius: 7px;
+    background-color: #ffffff;
+}
+
+.card-content ion-button{
+    --background: hsl(189, 100%, 50%);
 }
