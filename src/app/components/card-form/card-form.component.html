@@ -6,6 +6,6 @@
   <ion-card-content class="card-content">
     <ion-input [(ngModel)]="project.title" id="title" name="title" class="input" required #title="ngModel" placeholder="Project name"></ion-input>
 
-    <ion-button expand="full" (click)="addProject(project.title)">Create Project</ion-button>
+    <ion-button expand="full" (click)="addProject(project.title)" [disabled]="!project.title">Create Project</ion-button>
   </ion-card-content>
 </ion-card>
