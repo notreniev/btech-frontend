@@ -51,7 +51,7 @@
     </ion-card-content>
     
     <div class="card-footer">
-        <ion-input class="input" type="text" [(ngModel)]="task.description" id="description" name="description" required
+        <ion-input class="input" type="text" [(ngModel)]="task.description" id="description" name="description" required maxlength="80"
             #description="ngModel" placeholder="Task">
         </ion-input>
         <ion-button color="success" (click)="addTask(task.description)" [disabled]="formProject.invalid" *ngIf="!editingTaskDescription">Add</ion-button>
