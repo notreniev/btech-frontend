@@ -26,6 +26,7 @@ export class CardComponent implements OnInit {
     private projectService: ProjectService) { }
 
   ngOnInit(): void {
+    this.removeFinishedAtFromTasks();
   }
 
   async addTask(description: string){
@@ -35,13 +36,19 @@ export class CardComponent implements OnInit {
     task.description = description;
 
     const hasIt = this.project.tasks.some(task => task.description === description);
-    if (!hasIt){
-      this.project.tasks.push(task);
-      this.task.description = '';
-      await this.projectService
-        .update(this.project)
-        .toPromise();
+    if (hasIt){
+      const alert = await this.removeWithConfirmation('Task\'s already on the list', 'Confirm?');
+      if (alert.role !== 'ok'){
+        return;
+      }
     }
+
+    this.project.tasks.push(task);
+    this.task.description = '';
+    await this.projectService
+      .update(this.project)
+      .toPromise();  
+
   }
 
   editTask(task: TaskModel){
@@ -49,12 +56,23 @@ export class CardComponent implements OnInit {
     this.task = {...task};
   }
 
-  finishTask(task: TaskModel){
+  async finishTask(task: TaskModel){
     const hasIt = this.dones.some(taskObj => taskObj._id === task._id);
     if (!hasIt){
       task.finishedAt = new Date();
-      this.dones.push(task);
+      this.project.done.push(task);
+      await this.projectService
+      .update(this.project)
+      .toPromise();
     }
+  }
+
+  /**
+   * Removo para zerar os estado da lista
+   * de tasks original
+   */
+  removeFinishedAtFromTasks(){
+    this.project.tasks.forEach(task => task.completed = false);
   }
 
   async saveTask(task: TaskModel){
@@ -70,7 +88,7 @@ export class CardComponent implements OnInit {
   }
 
   async removeTask(task: TaskModel){
-    const alert = await this.removeWithConfirmation();
+    const alert = await this.removeWithConfirmation('Removing Task', 'Are you sure?');
     
     if (alert.role === 'ok') {
       const index = this.project.tasks.findIndex(taskObj => taskObj._id === task._id);
@@ -78,7 +96,7 @@ export class CardComponent implements OnInit {
         this.project.tasks.splice(index, 1);
         await this.projectService
         .update(this.project)
-        .toPromise();  
+        .toPromise();
       }
     }
   }
@@ -101,11 +119,11 @@ export class CardComponent implements OnInit {
   }
 
 
-  async removeWithConfirmation() {
+  async removeWithConfirmation(header: string, message: string) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
-      header: 'Removing Task',
-      message: 'Are you sure?',
+      header: header,
+      message: message,
       buttons: [
         {
           text: 'No',

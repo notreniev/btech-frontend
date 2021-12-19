@@ -25,7 +25,7 @@
       <h5 class="card-title">To Do</h5>
       <form #formProject="ngForm">
           <ion-item *ngFor="let task of project.tasks">
-            <ion-checkbox [(ngModel)]="task.completed" id="task_{{task._id}}" name="task_{{task._id}}" checked="task.completed?true:false" #completed="ngModel"></ion-checkbox>
+            <ion-checkbox [(ngModel)]="task.completed" id="task_{{task._id}}" name="task_{{task._id}}" checked="false"></ion-checkbox>
             <ion-label>
               <a (click)="editTask(task)" title="{{task.description}}">
                 {{task.description}}
@@ -38,7 +38,7 @@
         <br>
 
         <h5 class="card-title">Done</h5>
-        <div class="form-check" *ngFor="let done of dones">
+        <div class="form-check" *ngFor="let done of project.done">
             <ion-checkbox checked="true" [disabled]="true"></ion-checkbox>
             <ion-label class="tooltip">
               {{done.description}} 

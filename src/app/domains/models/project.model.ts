@@ -6,6 +6,7 @@ export class ProjectModel{
     _id: string;
     title: string;
     tasks: TaskModel[] = [];
+    done: TaskModel[] = [];
     user: UserModel;
 
 }
