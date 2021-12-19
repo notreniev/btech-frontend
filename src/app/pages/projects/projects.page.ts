@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { getProjectsMock } from '../../domains/mocks/project.mock';
 import { ProjectModel } from '../../domains/models/project.model';
+import { AuthService } from '../../services/auth.service';
 import { ProjectService } from '../../services/project.service';
 
 @Component({
@@ -12,16 +12,19 @@ export class ProjectsPage implements OnInit {
 
   projects: ProjectModel[] = [];
 
-  constructor(private projectService: ProjectService) { 
-  }
+  constructor(
+    private projectService: ProjectService,
+    private authService: AuthService
+    ) {}
 
   ngOnInit(): void {
-    this.loadProjects();
+    const userValue = this.authService.userValue;
+    this.loadProjects(userValue[0]._id);
   }
 
-  async loadProjects(){
+  async loadProjects(userId: string){
     this.projects = await this.projectService
-      .getProjects()
+      .findByUserId(userId)
       .toPromise();
   }
 }

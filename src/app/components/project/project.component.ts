@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
 import { ProjectModel } from '../../domains/models/project.model';
+import { AuthService } from '../../services/auth.service';
 import { ProjectService } from '../../services/project.service';
 
 @Component({
@@ -18,7 +19,9 @@ export class ProjectComponent implements OnInit {
   constructor(
     private alertController: AlertController,
     private toastController: ToastController,
-    private projectService: ProjectService) { }
+    private projectService: ProjectService,
+    private authService: AuthService
+    ) { }
 
   ngOnInit(): void {
     this.projects.reverse();
@@ -39,6 +42,8 @@ export class ProjectComponent implements OnInit {
   }
 
   async updateProjects(project: ProjectModel) {
+    const user = this.authService.userValue[0];
+    project.user = user;
     this.projects.unshift(project);
     this.showHideForm = false;
     await this.projectService.create(project)

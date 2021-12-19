@@ -39,6 +39,12 @@ export class ProjectService extends BaseService{
     .pipe(catchError(this.handleError));
   }
 
+  findByUserId(userId: string): Observable<ProjectModel[]>{
+    return this.httpClient
+    .get<ProjectModel[]>(`${environment.api}/projects/${userId}/user`, this.httpOptions())
+    .pipe(catchError(this.handleError));
+  }
+
   delete(projectId: string): Observable<ProjectModel>{
     return this.httpClient
       .delete<ProjectModel>(`${environment.api}/projects/${projectId}`, this.httpOptions())

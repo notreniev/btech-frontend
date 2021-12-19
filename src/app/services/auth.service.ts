@@ -9,7 +9,7 @@ import { BaseService } from './base.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends BaseService{
+export class AuthService extends BaseService {
 
   isLoggedIn = false;
   userSubject: BehaviorSubject<UserModel>;
@@ -19,7 +19,7 @@ export class AuthService extends BaseService{
     private router: Router) {
     super();
 
-    this.userSubject = new BehaviorSubject<UserModel>(new UserModel());
+    this.userSubject = new BehaviorSubject<UserModel>(this.getUserFromSessionStorage());
   }
 
   get userValue(): UserModel {
@@ -30,14 +30,29 @@ export class AuthService extends BaseService{
     const result = await this.httpClient
       .post<UserModel>(`${environment.api}/auth/signin`, user, this.httpOptions())
       .toPromise();
+
+    if (result) {
+      this.setUserOnSessionStorage(result);
+    }
+
     return result;
   }
 
-  async signout(){
+  async signout() {
     /**
      * Do other stuff here before signout
      */
     this.router.navigate(['/signin']);
   }
 
+  setUserOnSessionStorage(user: UserModel) {
+    sessionStorage.setItem('loggedUser', JSON.stringify(user));
+    this.userSubject.next(user);
+  }
+
+  getUserFromSessionStorage() {
+    const loggedUser = sessionStorage.getItem('loggedUser');
+    const loggedUserObj = JSON.parse(loggedUser);
+    return loggedUserObj;
+  }
 }

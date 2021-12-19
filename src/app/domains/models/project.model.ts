@@ -1,8 +1,11 @@
 import { TaskModel } from "./task.model";
 import { v4 as uuidv4 } from "uuid";
+import { UserModel } from "./user.model";
 
 export class ProjectModel{
-    _id: string = uuidv4();
+    _id: string;
     title: string;
-    tasks: TaskModel[] = []; 
+    tasks: TaskModel[] = [];
+    user: UserModel;
+
 }
