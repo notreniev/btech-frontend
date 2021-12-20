@@ -25,14 +25,14 @@ export class SigninPage implements OnInit {
   async signin(user: UserModel){
     try {
       const result = await this.authService.authenticate(user);
-      if (result){
+      if (result[0]){
         this.router.navigate(['projects']);
         this.presentUserFeedback('Signin successful', Severity.SUCCESS);
       }else{
-        this.presentUserFeedback('Something\'s got wrong', Severity.FAILURE);
+        this.presentUserFeedback('User or password failed to login', Severity.FAILURE);
       }
     } catch (error) {
-      this.presentUserFeedback('User or password failure to login', Severity.FAILURE);
+      this.presentUserFeedback('Something\'s got wrong', Severity.FAILURE);
     }
   }
 
