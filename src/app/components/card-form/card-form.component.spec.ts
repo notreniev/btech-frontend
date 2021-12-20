@@ -22,4 +22,13 @@ describe('CardFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('Component Behaviors', () => {
+    it('Should test addProject', () => {
+      const spyUpdate = spyOn(component.updateProjectsEvent, 'emit');
+      component.addProject('new project');
+
+      expect(spyUpdate).toHaveBeenCalled();
+    });
+  });
 });
