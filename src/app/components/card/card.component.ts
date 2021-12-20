@@ -37,7 +37,7 @@ export class CardComponent implements OnInit {
 
     const hasIt = this.project.tasks.some(task => task.description === description);
     if (hasIt){
-      const alert = await this.removeWithConfirmation('Task\'s already on the list', 'Confirm?');
+      const alert = await this.presentConfirmation('Task\'s already on the list', 'Confirm?');
       if (alert.role !== 'ok'){
         return;
       }
@@ -76,10 +76,9 @@ export class CardComponent implements OnInit {
   }
 
   async saveTask(task: TaskModel){
-    const savedTask = {...task};
     const index = this.project.tasks.findIndex(taskObj => taskObj._id === task._id);
     if (index > -1){
-      this.project.tasks[index] = savedTask;
+      this.project.tasks[index] = task;
       this.task.description = '';
       await this.projectService
       .update(this.project)
@@ -88,7 +87,7 @@ export class CardComponent implements OnInit {
   }
 
   async removeTask(task: TaskModel){
-    const alert = await this.removeWithConfirmation('Removing Task', 'Are you sure?');
+    const alert = await this.presentConfirmation('Removing Task', 'Are you sure?');
     
     if (alert.role === 'ok') {
       const index = this.project.tasks.findIndex(taskObj => taskObj._id === task._id);
@@ -119,7 +118,7 @@ export class CardComponent implements OnInit {
   }
 
 
-  async removeWithConfirmation(header: string, message: string) {
+  async presentConfirmation(header: string, message: string) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
       header: header,

@@ -2,16 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { environment } from '../../environments/environment';
 import { UserModel } from '../domains/models/user.model';
 import { BaseService } from './base.service';
 import { OnDestroy } from '@angular/core';
+import { getUserMock } from '../domains/mocks/user.mock';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService extends BaseService implements OnDestroy {
+export class AuthServiceMock extends BaseService implements OnDestroy {
 
   userSubject: BehaviorSubject<UserModel>;
   currentUser: Observable<UserModel>;
@@ -30,23 +29,13 @@ export class AuthService extends BaseService implements OnDestroy {
   }
 
   async authenticate(user: UserModel): Promise<UserModel> {
-    const result = await this.httpClient
-      .post<UserModel>(`${environment.api}/auth/signin`, user, this.httpOptions())
-      .pipe(map(user => {
-        this.userSubject.next(user);
-        return user;
-      })).toPromise();
-
-    if (result) {
-      this.setUserOnSessionStorage(result);
-    }
-
+    const result = getUserMock();
+    this.userSubject.next(result);
     return result;
   }
 
   signout() {
     sessionStorage.removeItem('loggedUser');
-    this.router.navigate(['signin']);
   }
 
   setUserOnSessionStorage(user: UserModel) {
