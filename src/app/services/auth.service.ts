@@ -31,18 +31,18 @@ export class AuthService extends BaseService implements OnDestroy {
   }
 
   async authenticate(user: UserModel): Promise<LoginModel> {
-    const result = await this.httpClient
-      .post<LoginModel>(`${environment.api}/auth/signin`, user, this.httpOptions())
-      .pipe(map(login => {
-        this.userSubject.next(login);
-        return login;
-      })).toPromise();
+    try {
+      return await this.httpClient
+        .post<LoginModel>(`${environment.api}/auth/signin`, user, this.httpOptions())
+        .pipe(map(login => {
+          this.setUserOnSessionStorage(login);
+          return login;
+        }))
+        .toPromise();
 
-    if (result) {
-      this.setUserOnSessionStorage(result);
+    } catch (error) {
+      throw error;
     }
-
-    return result;
   }
 
   signout() {
@@ -63,12 +63,12 @@ export class AuthService extends BaseService implements OnDestroy {
 
   isLoggedIn(): boolean {
     const user = this.userValue;
-    if (user){
+    if (user) {
       return (user && user.token) ? true : false;
     }
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.userSubject.unsubscribe();
   }
 

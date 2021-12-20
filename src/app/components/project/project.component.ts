@@ -42,8 +42,9 @@ export class ProjectComponent implements OnInit {
   }
 
   async updateProjects(project: ProjectModel) {
-    const user = this.authService.userValue[0];
+    const { user } = this.authService.userValue;
     project.user = user;
+    project.createdAt = new Date();
     this.projects.unshift(project);
     this.showHideForm = false;
     await this.projectService.create(project)

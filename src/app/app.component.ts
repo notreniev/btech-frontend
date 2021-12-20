@@ -31,7 +31,7 @@ export class AppComponent implements OnInit{
 
   initializeApp() {
     this.authService.currentUser.subscribe(logged => {
-      if (logged.user) this.currentUser = logged.user;
+      if (logged && logged.user) this.currentUser = logged.user;
     }, () => {
       this.router.navigate(['signin']);
     });
@@ -48,7 +48,7 @@ export class AppComponent implements OnInit{
   
     const { data } = await popover.onDidDismiss();
 
-    if (data.action === 'signout'){
+    if (data && data.action === 'signout'){
       this.currentUser = new UserModel();
       this.signout();
     }

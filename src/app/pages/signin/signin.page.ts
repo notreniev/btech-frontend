@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { UserModel } from '../../domains/models/user.model';
@@ -25,14 +25,16 @@ export class SigninPage implements OnInit {
   async signin(user: UserModel){
     try {
       const authenticated = await this.authService.authenticate(user);
+
       if (authenticated){
         this.presentUserFeedback('Signin successful', Severity.SUCCESS);
-        this.router.navigate(['/projects']);
+        this.router.navigate(['projects']);
       }else{
-        this.presentUserFeedback('User or password failed to login', Severity.FAILURE);
+        this.presentUserFeedback('User/password doesn\'t match', Severity.FAILURE);
       }
     } catch (error) {
-      this.presentUserFeedback('Something\'s got wrong', Severity.FAILURE);
+      console.log('error', error.error.message)
+      this.presentUserFeedback(`Something\'s got wrong: ${error.error.message}`, Severity.FAILURE);
     }
   }
 
