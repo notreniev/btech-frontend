@@ -38,7 +38,7 @@ export class CardComponent implements OnInit {
     const hasIt = this.project.tasks.some(task => task.description === description);
     if (hasIt){
       const alert = await this.presentConfirmation('Task\'s already on the list', 'Confirm?');
-      if (alert.role !== 'ok'){
+      if (alert.role != 'ok'){
         return;
       }
     }
@@ -57,7 +57,8 @@ export class CardComponent implements OnInit {
   }
 
   async finishTask(task: TaskModel){
-    const hasIt = this.dones.some(taskObj => taskObj._id === task._id);
+    const hasIt = this.project.done.some(taskObj => taskObj._id === task._id);
+    console.log('hasIt', hasIt)
     if (!hasIt){
       task.finishedAt = new Date();
       this.project.done.push(task);
