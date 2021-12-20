@@ -25,7 +25,7 @@ export class AuthServiceMock extends BaseService implements OnDestroy {
   }
 
   get userValue(): UserModel {
-    return this.userSubject.value;
+    return getUserMock();
   }
 
   async authenticate(user: UserModel): Promise<UserModel> {
