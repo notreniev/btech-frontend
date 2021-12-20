@@ -58,7 +58,7 @@ export class CardComponent implements OnInit {
 
   async finishTask(task: TaskModel){
     const hasIt = this.project.done.some(taskObj => taskObj._id === task._id);
-    console.log('hasIt', hasIt)
+
     if (!hasIt){
       task.finishedAt = new Date();
       this.project.done.push(task);
@@ -69,8 +69,8 @@ export class CardComponent implements OnInit {
   }
 
   /**
-   * Removo para zerar os estado da lista
-   * de tasks original
+   * Set to completed to set list's state on the
+   * original tasks list
    */
   removeFinishedAtFromTasks(){
     this.project.tasks.forEach(task => task.completed = false);
