@@ -7,34 +7,35 @@ import { environment } from '../../environments/environment';
 import { UserModel } from '../domains/models/user.model';
 import { BaseService } from './base.service';
 import { OnDestroy } from '@angular/core';
+import { LoginModel } from '../domains/models/login.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService extends BaseService implements OnDestroy {
 
-  userSubject: BehaviorSubject<UserModel>;
-  currentUser: Observable<UserModel>;
+  userSubject: BehaviorSubject<LoginModel>;
+  currentUser: Observable<LoginModel>;
 
   constructor(
     private httpClient: HttpClient,
     private router: Router) {
     super();
 
-    this.userSubject = new BehaviorSubject<UserModel>(this.getUserFromSessionStorage());
+    this.userSubject = new BehaviorSubject<LoginModel>(this.getUserFromSessionStorage());
     this.currentUser = this.userSubject.asObservable();
   }
 
-  get userValue(): UserModel {
+  get userValue(): LoginModel {
     return this.userSubject.value;
   }
 
-  async authenticate(user: UserModel): Promise<UserModel> {
+  async authenticate(user: UserModel): Promise<LoginModel> {
     const result = await this.httpClient
-      .post<UserModel>(`${environment.api}/auth/signin`, user, this.httpOptions())
-      .pipe(map(user => {
-        this.userSubject.next(user);
-        return user;
+      .post<LoginModel>(`${environment.api}/auth/signin`, user, this.httpOptions())
+      .pipe(map(login => {
+        this.userSubject.next(login);
+        return login;
       })).toPromise();
 
     if (result) {
@@ -49,9 +50,9 @@ export class AuthService extends BaseService implements OnDestroy {
     this.router.navigate(['signin']);
   }
 
-  setUserOnSessionStorage(user: UserModel) {
-    this.userSubject.next(user);
-    sessionStorage.setItem('loggedUser', JSON.stringify(user));
+  setUserOnSessionStorage(login: LoginModel) {
+    this.userSubject.next(login);
+    sessionStorage.setItem('loggedUser', JSON.stringify(login));
   }
 
   getUserFromSessionStorage() {
@@ -63,7 +64,7 @@ export class AuthService extends BaseService implements OnDestroy {
   isLoggedIn(): boolean {
     const user = this.userValue;
     if (user){
-      return (user[0] && user[0].email) ? true : false;
+      return (user && user.token) ? true : false;
     }
   }
 

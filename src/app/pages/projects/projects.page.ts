@@ -20,8 +20,8 @@ export class ProjectsPage implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    this.authService.currentUser.subscribe(user => {
-      if (user) this.loadProjects(user[0]._id);
+    this.authService.currentUser.subscribe(logged => {
+      if (logged.user) this.loadProjects(logged.user._id);
     }, () => {
       this.router.navigate(['signin']);
       location.reload();

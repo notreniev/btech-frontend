@@ -30,8 +30,8 @@ export class AppComponent implements OnInit{
 
 
   initializeApp() {
-    this.authService.currentUser.subscribe(user => {
-      if (user) this.currentUser = user[0];
+    this.authService.currentUser.subscribe(logged => {
+      if (logged.user) this.currentUser = logged.user;
     }, () => {
       this.router.navigate(['signin']);
     });
