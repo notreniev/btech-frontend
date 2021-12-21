@@ -44,11 +44,11 @@ export class CardComponent implements OnInit {
     }
 
     this.project.tasks.push(task);
-    this.task.description = '';
     await this.projectService
-      .update(this.project)
-      .toPromise();  
-
+    .update(this.project)
+    .toPromise();  
+    
+    this.task.description = '';
   }
 
   editTask(task: TaskModel){
@@ -80,11 +80,12 @@ export class CardComponent implements OnInit {
     const index = this.project.tasks.findIndex(taskObj => taskObj._id === task._id);
     if (index > -1){
       this.project.tasks[index] = task;
-      this.task.description = '';
       await this.projectService
       .update(this.project)
       .toPromise();
     }
+
+    this.task = new TaskModel();
   }
 
   async removeTask(task: TaskModel){

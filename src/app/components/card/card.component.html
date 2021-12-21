@@ -27,6 +27,7 @@
           <ion-item *ngFor="let task of project.tasks">
             <ion-checkbox [(ngModel)]="task.completed" id="task_{{task._id}}" name="task_{{task._id}}" checked="false"></ion-checkbox>
             <ion-label>
+              <!-- {{task | json}} -->
               <a (click)="editTask(task)" title="{{task.description}}">
                 {{task.description}}
               </a>
