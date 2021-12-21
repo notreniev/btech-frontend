@@ -78,6 +78,5 @@ describe('ProjectComponent', () => {
       fixture.detectChanges();
       expect(component.projects.length).toBe(1);
     });
-
   });
 });

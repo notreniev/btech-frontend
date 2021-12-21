@@ -27,14 +27,13 @@ export class SigninPage implements OnInit {
       const authenticated = await this.authService.authenticate(user);
 
       if (authenticated){
-        this.presentUserFeedback('Signin successful', Severity.SUCCESS);
-        this.router.navigate(['projects']);
+        await this.presentUserFeedback('Signin successful', Severity.SUCCESS);
+        await this.router.navigate(['projects']);
       }else{
-        this.presentUserFeedback('User/password doesn\'t match', Severity.FAILURE);
+        await this.presentUserFeedback('User/password doesn\'t match', Severity.FAILURE);
       }
     } catch (error) {
-      console.log('error', error.error.message)
-      this.presentUserFeedback(`Something\'s got wrong: ${error.error.message}`, Severity.FAILURE);
+      await this.presentUserFeedback(`Something\'s got wrong: ${error?.error?.message}`, Severity.FAILURE);
     }
   }
 

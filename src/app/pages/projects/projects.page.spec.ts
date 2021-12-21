@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IonicModule } from '@ionic/angular';
 import { ProjectModule } from '../../components/project/project.module';
+import { getProjectsMock } from '../../domains/mocks/project.mock';
 import { getUserMock } from '../../domains/mocks/user.mock';
 import { AuthServiceMock } from '../../services/auth.mock.service';
 import { AuthService } from '../../services/auth.service';
@@ -28,6 +29,7 @@ describe('ProjectsPage', () => {
 
     fixture = TestBed.createComponent(ProjectsPage);
     component = fixture.componentInstance;
+    component.projects = getProjectsMock();
     fixture.detectChanges();
   }));
 
@@ -38,7 +40,7 @@ describe('ProjectsPage', () => {
   describe('Component Behaviors', () => {
     it('Should call loadProjects', async () => {
       await component.loadProjects(getUserMock()._id);
-
+   
       expect(component.projects.length).toBeGreaterThan(0);
     });
   });
